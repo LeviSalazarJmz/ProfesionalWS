@@ -15,7 +15,12 @@ import {
   Terminal, 
   Briefcase, 
   GraduationCap, 
-  ArrowUp 
+  Users, 
+  ArrowUp, 
+  Clock, 
+  LayoutGrid, 
+  Monitor, 
+  Palette 
 } from 'lucide-react';
 
 const GithubIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
@@ -44,40 +49,16 @@ const carouselVertical = [
   { src: '/portfolio/d8w.png', label: 'Pieza 8', tag: 'AFTER EFFECTS / MOTION' },
 ];
 
-const technicalPillars = [
-  {
-    icon: Code2,
-    title: "Frontend & Arquitectura de Interfaz",
-    description: "Desarrollo de aplicaciones modernas y reactivas con estricta adherencia al Diseño Centrado en el Usuario (DCU), accesibilidad y rendimiento.",
-    skills: ["React", "TypeScript", "Tailwind CSS", "Next.js", "HTML5 / CSS3 Semántico", "Diseño Centrado en el Usuario (DCU)"]
-  },
-  {
-    icon: Cpu,
-    title: "Backend, Datos & Inteligencia Artificial",
-    description: "Construcción de servicios backend y fundamentos de IA para la optimización y transformación digital en entornos empresariales.",
-    skills: ["Python", "Node.js", "Express", "PostgreSQL", "APIs RESTful", "Machine Learning", "Deep Learning"]
-  },
-  {
-    icon: Terminal,
-    title: "Sistemas Operativos & Infraestructura",
-    description: "Manejo integral de entornos operativos para desarrollo, despliegue continuo y control de versiones distribuido.",
-    skills: ["Linux / Ubuntu Server", "Windows", "macOS", "Git", "GitHub", "Vercel", "Vite"]
-  },
-  {
-    icon: Layers,
-    title: "Metodologías & Suite Multimedia",
-    description: "Gestión ágil de proyectos colaborativos y dominio completo de herramientas visuales para diseño de interfaz y activos digitales.",
-    skills: ["Metodologías Ágiles (Scrum / Kanban)", "Figma", "Photoshop", "Illustrator", "Premiere Pro", "After Effects"]
-  }
-];
+const pillarIcons = [Code2, Cpu, Terminal, Layers];
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [projectTab, setProjectTab] = useState<'all' | 'web' | 'design'>('all');
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1100);
+    const timer = setTimeout(() => setLoading(false), 900);
     const handleScroll = () => setShowScrollTop(window.scrollY > 350);
 
     window.addEventListener('scroll', handleScroll);
@@ -101,222 +82,267 @@ export default function App() {
   const designProject = cvData.projects[1];
 
   return (
-    <div className="relative min-h-screen bg-[#040711] text-slate-100 selection:bg-sky-500/30 selection:text-sky-200 antialiased overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#030712] text-zinc-100 selection:bg-sky-500/30 selection:text-sky-200 antialiased overflow-x-hidden">
       
       {loading && (
         <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#02050b] transition-opacity duration-500">
           <div className="flex flex-col items-center gap-3">
-            <span className="font-mono text-[11px] tracking-[0.3em] text-sky-400/80 uppercase">
+            <span className="font-mono text-[11px] tracking-[0.25em] text-zinc-400 uppercase">
               SOFTWARE & SOLUTIONS
             </span>
-            <h1 className="text-xl font-black tracking-widest text-white uppercase">
+            <h1 className="text-xl font-bold tracking-wider text-white uppercase">
               {cvData.personal.name}
             </h1>
-            <div className="h-0.5 w-10 bg-sky-400 animate-pulse mt-1" />
+            <div className="h-0.5 w-8 bg-sky-400 animate-pulse mt-1" />
           </div>
         </div>
       )}
 
-      {/* Trama blueprint azulina y gradientes atmosféricos */}
-      <div className="fixed inset-0 bg-blueprint-pattern mask-radial opacity-70 pointer-events-none -z-10" />
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[1050px] h-[520px] bg-gradient-to-b from-sky-600/15 via-indigo-950/20 to-transparent blur-[140px] pointer-events-none -z-10 rounded-full" />
-      <div className="fixed bottom-0 right-0 w-[600px] h-[400px] bg-sky-950/15 blur-[160px] pointer-events-none -z-10 rounded-full" />
+      {/* Rejilla y resplandor ambiental */}
+      <div className="fixed inset-0 bg-blueprint-pattern mask-radial opacity-40 pointer-events-none -z-10" />
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[450px] bg-gradient-to-b from-sky-500/15 via-indigo-500/5 to-transparent blur-[140px] pointer-events-none -z-10 rounded-full" />
 
       <Navbar />
 
-      <main className="max-w-5xl mx-auto px-6 pt-36 pb-28 flex flex-col gap-36">
+      <main className="max-w-5xl mx-auto px-6 pt-36 pb-28 flex flex-col gap-32">
         
-        {/* SECCIÓN HERO CON FOTO INTEGRADA */}
-<section id="inicio" className="min-h-[75vh] flex flex-col justify-center scroll-mt-36">
-  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-    
-    {/* Columna de texto */}
-    <div className="lg:col-span-8 flex flex-col justify-center">
-      <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#080d1a]/90 border border-sky-900/40 text-sky-400 text-xs font-semibold w-fit mb-8 shadow-sm backdrop-blur-md">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-        </span>
-        {cvData.personal.status}
-      </div>
+        {/* ========================================================================= */}
+        {/* HERO SECTION BENTO                                                        */}
+        {/* ========================================================================= */}
+        <section id="inicio" className="scroll-mt-36">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            {/* Tarjeta Principal de Identidad (8 columnas) */}
+            <div className="relative lg:col-span-8 p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-zinc-900/80 to-zinc-950/90 border border-white/10 shadow-2xl backdrop-blur-md flex flex-col justify-between overflow-hidden before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-sky-400/50 before:to-transparent">
+              <div>
+                <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-black/50 border border-white/10 text-sky-400 text-xs font-mono w-fit mb-8">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  {cvData.personal.status}
+                </div>
 
-      <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6 leading-[1.08]">
-        Hola, soy{' '}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-200 to-indigo-400">
-          {cvData.personal.name}
-        </span>
-      </h1>
+                <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white mb-4 leading-[1.08]">
+                  Hola, soy{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-200 to-indigo-300">
+                    {cvData.personal.name}
+                  </span>
+                </h1>
 
-      <div className="flex flex-wrap items-center gap-3 text-lg sm:text-xl md:text-2xl text-slate-300 font-medium mb-4">
-        <span>{cvData.personal.role}</span>
-      </div>
-
-      <div className="flex items-center gap-2 text-slate-400 text-sm mb-6 font-mono">
-        <MapPin className="w-4 h-4 text-sky-400" />
-        <span>{cvData.personal.location}</span>
-      </div>
-
-      <p className="text-base sm:text-lg text-slate-300/90 max-w-2xl leading-relaxed mb-10">
-        {cvData.personal.bio}
-      </p>
-
-      {/* Botones de acción y redes */}
-      <div className="flex flex-wrap items-center gap-4">
-        <a
-          href="#proyectos"
-          className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-400 to-blue-600 hover:from-sky-300 hover:to-blue-500 text-slate-950 font-bold transition-all hover:scale-[1.02] shadow-lg shadow-sky-500/20 active:scale-[0.98]"
-        >
-          Explorar Proyectos
-        </a>
-
-        <button
-          onClick={handleCopyEmail}
-          className="inline-flex items-center gap-2.5 px-5 py-3.5 rounded-xl bg-[#0a0f1d]/90 hover:bg-[#11192e] border border-sky-950/80 text-slate-200 text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]"
-        >
-          {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-sky-400" />}
-          <span>{copied ? '¡Correo copiado!' : 'Copiar email'}</span>
-        </button>
-
-        <div className="flex items-center gap-2">
-          <a
-            href={cvData.personal.github}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub"
-            className="p-3.5 rounded-xl bg-[#0a0f1d]/80 hover:bg-[#11192e] border border-sky-950/70 text-slate-400 hover:text-white transition-all"
-          >
-            <GithubIcon className="w-5 h-5" />
-          </a>
-          <a
-            href={cvData.personal.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-            className="p-3.5 rounded-xl bg-[#0a0f1d]/80 hover:bg-[#11192e] border border-sky-950/70 text-slate-400 hover:text-sky-400 transition-all"
-          >
-            <LinkedinIcon className="w-5 h-5" />
-          </a>
-        </div>
-      </div>
-    </div>
-
-    {/* Columna de fotografía enmarcada */}
-    <div className="lg:col-span-4 flex justify-center">
-      <div className="relative group w-64 h-80 sm:w-72 sm:h-96">
-        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-sky-500/30 to-indigo-500/10 blur-lg opacity-70 group-hover:opacity-100 transition-opacity" />
-        <div className="relative w-full h-full rounded-3xl overflow-hidden border border-sky-900/60 bg-[#080d1a]">
-          <img
-            src="/perfil.jpg"
-            alt={cvData.personal.name}
-            className="w-full h-full object-cover object-top grayscale-[15%] group-hover:grayscale-0 transition-all duration-500"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = 'https://placehold.co/400x500/080d1a/38bdf8?text=Levi+Salazar';
-            }}
-          />
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-        {/* PERFIL & MÉTRICAS INTEGRADAS EN VERTICAL */}
-        <section className="scroll-mt-32 pt-6 border-t border-sky-950/60">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-7">
-              <span className="text-xs font-mono text-sky-400 uppercase tracking-widest block mb-2">
-                PERFIL & ENFOQUE PROFESIONAL
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 leading-snug">
-                Ingeniería en Sistemas orientada al usuario y a la resolución práctica de problemas.
-              </h2>
-              <div className="space-y-4 text-slate-300 text-sm leading-relaxed">
-                <p>
-                  Mi formación académica en el <span className="text-white font-medium">Instituto Tecnológico de Durango</span> me ha brindado bases firmes en desarrollo de software, lógica algorítmica y la aplicación estratégica de Inteligencia Artificial para la transformación digital empresarial.
+                <p className="text-lg sm:text-xl text-zinc-300 font-medium mb-3">
+                  {cvData.personal.role}
                 </p>
-                <p>
-                  Combino el rigor de los sistemas computacionales con metodologías de <span className="text-white font-medium">Diseño Centrado en el Usuario (DCU)</span> y producción multimedia, garantizando que cada solución web no solo sea sólida a nivel de código, sino accesible, veloz e intuitiva en producción.
+
+                <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-xl mb-8">
+                  {cvData.personal.bio}
                 </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/5">
+                <a
+                  href="#proyectos"
+                  className="px-6 py-3 rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold text-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  Ver Proyectos
+                </a>
+
+                <button
+                  onClick={handleCopyEmail}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-black/60 hover:bg-zinc-900 border border-white/10 text-zinc-200 text-sm font-medium transition-all"
+                >
+                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-zinc-400" />}
+                  <span>{copied ? '¡Copiado!' : 'Copiar correo'}</span>
+                </button>
+
+                <div className="flex items-center gap-2 pl-2">
+                  <a
+                    href={cvData.personal.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="GitHub"
+                    className="p-3 rounded-xl bg-black/60 hover:bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white transition-all"
+                  >
+                    <GithubIcon className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={cvData.personal.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    className="p-3 rounded-xl bg-black/60 hover:bg-zinc-900 border border-white/10 text-zinc-400 hover:text-sky-400 transition-all"
+                  >
+                    <LinkedinIcon className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
             </div>
 
-            <div className="lg:col-span-5 flex flex-col gap-8 bg-[#080d1a]/80 border border-sky-950/70 p-8 rounded-3xl backdrop-blur-sm shadow-xl shadow-black/40">
-              <div>
-                <div className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-1">
-                  2020 – 2026
-                </div>
-                <div className="h-0.5 w-10 bg-sky-400 mb-2" />
-                <div className="text-xs font-mono uppercase tracking-wider text-slate-400">
-                  Ingeniería en Sistemas Computacionales · ITD
+            {/* Tarjeta de Fotografía Editorial (4 columnas) */}
+            <div className="relative lg:col-span-4 rounded-3xl bg-gradient-to-b from-zinc-900/80 to-zinc-950/90 border border-white/10 shadow-2xl p-4 flex flex-col justify-between overflow-hidden before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-sky-400/40 before:to-transparent">
+              <div className="relative w-full h-72 sm:h-80 rounded-2xl overflow-hidden bg-black">
+                <img
+                  src="/perfil.jpg"
+                  alt={cvData.personal.name}
+                  className="w-full h-full object-cover object-top grayscale-[15%] hover:grayscale-0 transition-all duration-500"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = 'https://placehold.co/400x500/0b0f19/38bdf8?text=Levi+Salazar';
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-zinc-300">
+                  <span className="px-2 py-1 rounded bg-black/60 border border-white/10 backdrop-blur-md">
+                    ING. EN SISTEMAS
+                  </span>
+                  <span className="text-emerald-400 flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    ACTIVO
+                  </span>
                 </div>
               </div>
 
-              <div>
-                <div className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-1">
-                  +15 Personas
+              <div className="pt-4 px-2 flex items-center justify-between text-xs text-zinc-400 font-mono">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-sky-400" />
+                  <span>Durango, México</span>
                 </div>
-                <div className="h-0.5 w-10 bg-sky-400 mb-2" />
-                <div className="text-xs font-mono uppercase tracking-wider text-slate-400">
-                  Personal coordinado bajo liderazgo técnico · INE
+                <div className="flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-zinc-500" />
+                  <span>Respuesta &lt;24h</span>
                 </div>
               </div>
+            </div>
 
-              <div>
-                <div className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-1">
-                  100% DCU
-                </div>
-                <div className="h-0.5 w-10 bg-sky-400 mb-2" />
-                <div className="text-xs font-mono uppercase tracking-wider text-slate-400">
-                  Diseño Centrado en el Usuario & Accesibilidad
-                </div>
+          </div>
+
+          {/* Fila Bento Secundaria: Métricas Clave de Carrera y Liderazgo */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
+            <div className="p-6 rounded-3xl bg-zinc-950/70 border border-white/10 hover:border-sky-500/30 transition-all">
+              <div className="text-xs font-mono text-sky-400 uppercase tracking-wider mb-1">
+                Formación Profesional
               </div>
+              <div className="text-3xl font-black text-white tracking-tight mb-2">
+                2020 – 2026
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Ingeniería en Sistemas Computacionales en el Instituto Tecnológico de Durango (ITD).
+              </p>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-zinc-950/70 border border-white/10 hover:border-sky-500/30 transition-all">
+              <div className="text-xs font-mono text-sky-400 uppercase tracking-wider mb-1">
+                Liderazgo de Equipos
+              </div>
+              <div className="text-3xl font-black text-white tracking-tight mb-2">
+                +15 Personas
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Coordinación técnica en campo electoral (INE) bajo plazos estrictos y metas de alta exigencia.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-zinc-950/70 border border-white/10 hover:border-sky-500/30 transition-all">
+              <div className="text-xs font-mono text-sky-400 uppercase tracking-wider mb-1">
+                Gestión Pública (2022)
+              </div>
+              <div className="text-3xl font-black text-white tracking-tight mb-2">
+                Director Municipal
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Titular del Instituto de la Juventud en Canatlán, articulando liderazgos y proyectos sociales.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* PROYECTOS */}
+        {/* ========================================================================= */}
+        {/* PROYECTOS CON FILTRO INTERACTIVO                                          */}
+        {/* ========================================================================= */}
         <section id="proyectos" className="scroll-mt-32">
-          <div className="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-widest mb-3">
-            <Sparkles className="w-4 h-4" />
-            <span>PORTAFOLIO</span>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <div>
+              <div className="flex items-center gap-2 text-sky-400 text-xs font-mono uppercase tracking-wider mb-2">
+                <Sparkles className="w-4 h-4" />
+                <span>PORTAFOLIO</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-2">
+                Proyectos y Casos Prácticos
+              </h2>
+              <p className="text-zinc-400 text-sm max-w-xl leading-relaxed">
+                Software funcional en producción y piezas de dirección visual.
+              </p>
+            </div>
+
+            {/* Pestañas / Filtro Interactivo */}
+            <div className="inline-flex p-1.5 rounded-2xl bg-zinc-900 border border-white/10 text-xs font-medium">
+              <button
+                onClick={() => setProjectTab('all')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
+                  projectTab === 'all'
+                    ? 'bg-sky-400 text-slate-950 font-bold shadow-sm'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span>Todos</span>
+              </button>
+              <button
+                onClick={() => setProjectTab('web')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
+                  projectTab === 'web'
+                    ? 'bg-sky-400 text-slate-950 font-bold shadow-sm'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                <Monitor className="w-3.5 h-3.5" />
+                <span>Software Web</span>
+              </button>
+              <button
+                onClick={() => setProjectTab('design')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
+                  projectTab === 'design'
+                    ? 'bg-sky-400 text-slate-950 font-bold shadow-sm'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                <Palette className="w-3.5 h-3.5" />
+                <span>Diseño Multimedia</span>
+              </button>
+            </div>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-            Proyectos y Casos Prácticos
-          </h2>
-          <p className="text-slate-400 mb-12 max-w-xl text-sm leading-relaxed">
-            Desarrollo de software en producción y producción visual orientada a la experiencia de usuario.
-          </p>
 
           <div className="flex flex-col gap-10">
-            {webProject && (
-              <div className="p-8 rounded-3xl bg-[#080d1a]/85 border border-sky-950/80 hover:border-sky-500/50 hover:shadow-[0_0_35px_-5px_rgba(56,189,248,0.2)] transition-all duration-300">
+            
+            {/* Proyecto 1: Web en Producción */}
+            {(projectTab === 'all' || projectTab === 'web') && webProject && (
+              <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-zinc-900/80 to-zinc-950/90 border border-white/10 hover:border-sky-400/40 transition-all duration-300 shadow-2xl">
                 <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                   <div>
-                    <span className="text-[11px] font-mono text-sky-400 uppercase tracking-wider block mb-1">
-                      SOFTWARE EN PRODUCCIÓN
+                    <span className="text-xs font-mono text-sky-400 uppercase tracking-wider block mb-1">
+                      Software en Producción
                     </span>
-                    <h3 className="text-2xl font-bold text-white">
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white">
                       {webProject.title}
                     </h3>
                   </div>
-                  <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400">
-                    ● Live en Vercel
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                    ● En línea en Vercel
                   </span>
                 </div>
 
-                <p className="text-slate-300 text-sm mb-6 max-w-2xl leading-relaxed">
+                <p className="text-zinc-300 text-sm sm:text-base mb-6 max-w-2xl leading-relaxed">
                   {webProject.description}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-8">
                   {webProject.tags.map((t) => (
-                    <span key={t} className="text-xs font-mono px-3 py-1 rounded-lg bg-[#0d1527] text-slate-300 border border-sky-950/60">
+                    <span key={t} className="text-xs font-mono px-3 py-1.5 rounded-lg bg-black/60 text-zinc-300 border border-white/10">
                       {t}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex items-center gap-5 pt-5 border-t border-sky-950/70">
+                <div className="flex items-center gap-6 pt-6 border-t border-white/10">
                   {webProject.liveUrl && (
                     <a
                       href={webProject.liveUrl}
@@ -333,7 +359,7 @@ export default function App() {
                       href={webProject.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors"
                     >
                       <GithubIcon className="w-4 h-4" />
                       <span>Repositorio</span>
@@ -343,134 +369,253 @@ export default function App() {
               </div>
             )}
 
-            {designProject && (
-              <div className="p-8 rounded-3xl bg-[#080d1a]/85 border border-sky-950/80 hover:border-indigo-500/40 transition-all duration-300">
+            {/* Proyecto 2: Diseño y Multimedia */}
+            {(projectTab === 'all' || projectTab === 'design') && designProject && (
+              <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-zinc-900/80 to-zinc-950/90 border border-white/10 hover:border-sky-400/40 transition-all duration-300 shadow-2xl">
                 <div className="mb-6">
-                  <span className="text-[11px] font-mono text-indigo-400 uppercase tracking-wider block mb-1">
-                    DIRECCIÓN DE ARTE & ADOBE SUITE
+                  <span className="text-xs font-mono text-zinc-400 uppercase tracking-wider block mb-1">
+                    Dirección de Arte & Adobe Suite
                   </span>
-                  <h3 className="text-2xl font-bold text-white mb-2">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                     {designProject.title}
                   </h3>
-                  <p className="text-slate-300 text-sm max-w-2xl leading-relaxed mb-4">
+                  <p className="text-zinc-300 text-sm sm:text-base max-w-2xl leading-relaxed mb-4">
                     {designProject.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {designProject.tags.map((t) => (
-                      <span key={t} className="text-xs font-mono px-3 py-1 rounded-lg bg-[#0d1527] text-slate-300 border border-sky-950/60">
+                      <span key={t} className="text-xs font-mono px-3 py-1.5 rounded-lg bg-black/60 text-zinc-300 border border-white/10">
                         {t}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-sky-950/70">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-white/10">
                   <div>
-                    <span className="block text-[11px] font-mono text-slate-400 mb-2 uppercase tracking-wider">
-                      Colección A · Formato Cuadrado (1:1)
+                    <span className="block text-xs font-mono text-zinc-400 mb-2 uppercase">
+                      Formato Cuadrado (1:1)
                     </span>
                     <Carousel images={carouselHorizontal} aspectRatioClass="aspect-square" />
                   </div>
                   <div>
-                    <span className="block text-[11px] font-mono text-slate-400 mb-2 uppercase tracking-wider">
-                      Colección B · Formato Vertical (4:3)
+                    <span className="block text-xs font-mono text-zinc-400 mb-2 uppercase">
+                      Formato Vertical (4:3)
                     </span>
                     <Carousel images={carouselVertical} aspectRatioClass="aspect-[3/4]" />
                   </div>
                 </div>
               </div>
             )}
+
           </div>
         </section>
 
-        {/* STACK TECNOLÓGICO VERTICAL */}
+        {/* ========================================================================= */}
+        {/* STACK TÉCNICO MODULAR                                                     */}
+        {/* ========================================================================= */}
+        {/* ========================================================================= */}
+        {/* MAPA CONCEPTUAL CARDINAL: STACK TECNOLÓGICO                               */}
+        {/* ========================================================================= */}
         <section id="habilidades" className="scroll-mt-32">
-          <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-widest mb-3">
-            <Code2 className="w-4 h-4" />
-            <span>COMPETENCIAS TÉCNICAS</span>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 text-sky-400 text-xs font-mono uppercase tracking-wider mb-2">
+              <Sparkles className="w-4 h-4" />
+              <span>ARQUITECTURA DE COMPETENCIAS</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+              Mapa Técnico de Disciplinas
+            </h2>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Esquema de integración entre desarrollo de interfaz, lógica de datos, diseño humano e infraestructura operativa.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-            Stack Tecnológico & Disciplinas
-          </h2>
-          <p className="text-slate-400 mb-12 max-w-2xl text-sm leading-relaxed">
-            Conjunto integral de tecnologías, sistemas operativos y metodologías aplicadas en ingeniería de software y desarrollo de productos digitales.
-          </p>
 
-          <div className="flex flex-col gap-6">
-            {technicalPillars.map((pillar) => {
-              const IconComponent = pillar.icon;
-              return (
-                <div 
-                  key={pillar.title} 
-                  className="p-8 rounded-3xl bg-[#080d1a]/85 border border-sky-950/70 hover:border-sky-500/40 transition-all duration-300"
-                >
-                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-                    <div className="max-w-md">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="p-2 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
-                          <IconComponent className="w-5 h-5" />
-                        </div>
-                        <h3 className="text-lg font-bold text-white tracking-wide">
-                          {pillar.title}
-                        </h3>
-                      </div>
-                      <p className="text-slate-400 text-sm leading-relaxed pl-1">
-                        {pillar.description}
-                      </p>
-                    </div>
+          <div className="relative max-w-4xl mx-auto flex flex-col items-center">
 
-                    <div className="flex-1 flex flex-wrap gap-2 md:justify-end">
-                      {pillar.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="text-xs px-3.5 py-2 rounded-xl bg-[#0d1527] text-slate-300 border border-sky-950/60 hover:border-sky-500/40 hover:text-white transition-all font-mono"
-                        >
-                          {skill}
-                        </span>
-                      ))}
+            {/* ------------------------------------------------------------- */}
+            {/* BLOQUE NORTE: CAPA DE PRESENTACIÓN / FRONTEND                 */}
+            {/* ------------------------------------------------------------- */}
+            <div className="w-full max-w-md z-10">
+              <div className="p-6 rounded-3xl bg-zinc-950/90 border border-sky-500/30 shadow-xl shadow-sky-500/5 hover:border-sky-400 transition-all duration-300">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                      <Code2 className="w-4 h-4" />
                     </div>
+                    <h3 className="text-base font-bold text-white">Frontend & UI</h3>
                   </div>
+                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 font-semibold">
+                    PRESENTACIÓN
+                  </span>
                 </div>
-              );
-            })}
+                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
+                  Interfaces reactivas, componentes desacoplados y maquetación centrada en la experiencia de uso.
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {["React", "TypeScript", "Tailwind CSS", "Next.js", "HTML5/CSS3", "DCU"].map((skill) => (
+                    <span key={skill} className="text-xs px-2.5 py-1 rounded-lg bg-zinc-900 text-zinc-300 border border-white/5 font-mono">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* LÍNEA CONECTORA NORTE -> CENTRO */}
+            <div className="h-10 w-px bg-gradient-to-b from-sky-400 via-sky-500/50 to-sky-400/20 relative">
+              <div className="absolute top-1/2 -translate-y-1/2 -left-1 w-2.5 h-2.5 rounded-full bg-sky-400/80 blur-xs" />
+            </div>
+
+            {/* ------------------------------------------------------------- */}
+            {/* FILA CENTRAL: OESTE (BACKEND) | NÚCLEO ISC | ESTE (CREATIVIDAD)*/}
+            {/* ------------------------------------------------------------- */}
+            <div className="w-full grid grid-cols-1 lg:grid-cols-11 gap-4 items-center z-10">
+
+              {/* BLOQUE OESTE: BACKEND & IA (4 columnas) */}
+              <div className="lg:col-span-4 p-6 rounded-3xl bg-zinc-950/90 border border-white/10 hover:border-sky-500/30 transition-all duration-300 shadow-xl">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                      <Cpu className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-base font-bold text-white">Backend & IA</h3>
+                  </div>
+                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-white/10 font-semibold">
+                    CÓMPUTO
+                  </span>
+                </div>
+                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
+                  Construcción de APIs, persistencia relacional e integración de modelos para transformación digital.
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Python", "Node.js", "Express", "PostgreSQL", "APIs REST", "Machine Learning"].map((skill) => (
+                    <span key={skill} className="text-xs px-2.5 py-1 rounded-lg bg-zinc-900 text-zinc-300 border border-white/5 font-mono">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* LÍNEA HORIZONTAL OESTE -> NÚCLEO (Solo desktop) */}
+              <div className="hidden lg:block lg:col-span-1 h-px bg-gradient-to-r from-white/10 via-sky-400/40 to-sky-400" />
+
+              {/* NODO NÚCLEO CENTRAL (1 columna) */}
+              <div className="lg:col-span-1 flex flex-col items-center justify-center my-2 lg:my-0">
+                <div className="relative group p-3.5 rounded-2xl bg-black border border-sky-400/60 shadow-lg shadow-sky-500/20 flex flex-col items-center justify-center">
+                  <div className="absolute -inset-1 rounded-2xl bg-sky-400/20 blur-md animate-pulse" />
+                  <span className="relative text-[30px] font-mono text-sky-400 font-bold tracking-widest text-center leading-tight">
+                    ISC<br />
+                  </span>
+                </div>
+              </div>
+
+              {/* LÍNEA HORIZONTAL NÚCLEO -> ESTE (Solo desktop) */}
+              <div className="hidden lg:block lg:col-span-1 h-px bg-gradient-to-r from-sky-400 via-sky-400/40 to-white/10" />
+
+              {/* BLOQUE ESTE: DISEÑO & METODOLOGÍAS (4 columnas) */}
+              <div className="lg:col-span-4 p-6 rounded-3xl bg-zinc-950/90 border border-white/10 hover:border-sky-500/30 transition-all duration-300 shadow-xl">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2 rounded-xl bg-violet-500/10 text-violet-400 border border-violet-500/20">
+                      <Palette className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-base font-bold text-white">Diseño & Ágil</h3>
+                  </div>
+                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-white/10 font-semibold">
+                    EXPERIENCIA
+                  </span>
+                </div>
+                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
+                  Metodologías de colaboración rápida y suite creativa aplicada a activos visuales e interacción.
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Scrum / Kanban", "Figma", "Photoshop", "Illustrator", "After Effects"].map((skill) => (
+                    <span key={skill} className="text-xs px-2.5 py-1 rounded-lg bg-zinc-900 text-zinc-300 border border-white/5 font-mono">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+            {/* LÍNEA CONECTORA CENTRO -> SUR */}
+            <div className="h-10 w-px bg-gradient-to-b from-sky-400/20 via-sky-500/50 to-sky-400 relative">
+              <div className="absolute top-1/2 -translate-y-1/2 -left-1 w-2.5 h-2.5 rounded-full bg-sky-400/80 blur-xs" />
+            </div>
+
+            {/* ------------------------------------------------------------- */}
+            {/* BLOQUE SUR: INFRAESTRUCTURA & SISTEMAS OPERATIVOS             */}
+            {/* ------------------------------------------------------------- */}
+            <div className="w-full max-w-md z-10">
+              <div className="p-6 rounded-3xl bg-zinc-950/90 border border-white/10 hover:border-sky-500/30 transition-all duration-300 shadow-xl">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <Terminal className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-base font-bold text-white">Sistemas & OS</h3>
+                  </div>
+                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-white/10 font-semibold">
+                    CIMIENTOS
+                  </span>
+                </div>
+                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
+                  Manejo de entornos de desarrollo multiplataforma, control de versiones y flujo de despliegue continuo.
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Linux / Ubuntu", "Windows", "macOS", "Git / GitHub", "Vercel", "Vite"].map((skill) => (
+                    <span key={skill} className="text-xs px-2.5 py-1 rounded-lg bg-zinc-900 text-zinc-300 border border-white/5 font-mono">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 
-        {/* TRAYECTORIA */}
+        {/* ========================================================================= */}
+        {/* TRAYECTORIA Y LIDERAZGO                                                   */}
+        {/* ========================================================================= */}
         <section id="experiencia" className="scroll-mt-32">
-          <div className="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-widest mb-3">
+          <div className="flex items-center gap-2 text-sky-400 text-xs font-mono uppercase tracking-wider mb-2">
             <Briefcase className="w-4 h-4" />
-            <span>HISTORIAL</span>
+            <span>EXPERIENCIA</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4">
-            Trayectoria y Formación
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
+            Trayectoria y Liderazgo
           </h2>
-          <p className="text-slate-400 mb-12 max-w-xl text-sm leading-relaxed">
-            Hitos profesionales de liderazgo y base formativa en ingeniería en sistemas.
+          <p className="text-zinc-400 mb-12 max-w-xl text-sm leading-relaxed">
+            Experiencia en coordinación de equipos, gestión pública y formación en sistemas.
           </p>
 
-          <div className="relative pl-6 sm:pl-8 border-l-2 border-sky-950 space-y-12">
+          <div className="relative pl-6 sm:pl-8 border-l-2 border-zinc-800 space-y-10">
             {cvData.experience.map((exp, idx) => (
               <div key={exp.id} className="relative group">
-                <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-[#040711] border-2 border-sky-400 group-hover:shadow-[0_0_12px_rgba(56,189,248,0.8)] transition-all" />
+                <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-[#030712] border-2 border-sky-400 transition-all" />
 
-                <div className="p-7 rounded-3xl bg-[#080d1a]/85 border border-sky-950/70">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                <div className="p-7 sm:p-8 rounded-3xl bg-zinc-950/80 border border-white/10 hover:border-white/20 transition-all">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2">
-                      {idx === 0 ? <Briefcase className="w-4 h-4 text-sky-400" /> : <GraduationCap className="w-4 h-4 text-indigo-400" />}
+                      {idx === 0 ? <Briefcase className="w-4 h-4 text-sky-400" /> : 
+                       idx === 1 ? <Users className="w-4 h-4 text-sky-400" /> : 
+                       <GraduationCap className="w-4 h-4 text-sky-400" />}
                       <h3 className="text-lg font-bold text-white">{exp.role}</h3>
                     </div>
-                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#0d1527] text-slate-300 w-fit">
+                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-black/60 text-zinc-300 w-fit">
                       {exp.period}
                     </span>
                   </div>
 
                   <div className="text-sm font-semibold text-sky-400 mb-4">{exp.company}</div>
 
-                  <ul className="space-y-2.5 text-slate-300 text-sm">
+                  <ul className="space-y-2 text-zinc-300 text-sm">
                     {exp.description.map((item, i) => (
                       <li key={i} className="flex items-start gap-2.5 leading-relaxed">
-                        <span className="text-sky-400 mt-1">▹</span>
+                        <span className="text-sky-400 mt-0.5">▹</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -481,30 +626,32 @@ export default function App() {
           </div>
         </section>
 
-        {/* CONTACTO */}
+        {/* ========================================================================= */}
+        {/* CONTACTO                                                                  */}
+        {/* ========================================================================= */}
         <section id="contacto" className="scroll-mt-32 pb-8">
-          <div className="p-8 sm:p-14 rounded-3xl bg-[#080d1a]/95 border border-sky-950/80 text-center flex flex-col items-center shadow-2xl shadow-black/60">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
-              ¿Iniciamos una conversación?
+          <div className="p-8 sm:p-14 rounded-3xl bg-gradient-to-b from-zinc-900/80 to-zinc-950/90 border border-white/10 text-center flex flex-col items-center shadow-2xl">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Hablemos sobre una oportunidad
             </h2>
-            <p className="text-slate-400 max-w-lg mb-10 text-sm sm:text-base leading-relaxed">
-              Disponible para puestos de desarrollo Frontend, ingeniería de software y creación de interfaces modernas.
+            <p className="text-zinc-400 max-w-lg mb-10 text-sm sm:text-base leading-relaxed">
+              Estoy disponible para proyectos de desarrollo Frontend, ingeniería de software o vacantes en equipos colaborativos.
             </p>
             
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
                 href={`mailto:${cvData.personal.email}`}
-                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-white text-slate-950 font-bold hover:bg-slate-200 transition-all hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-sky-400 text-slate-950 font-bold hover:bg-sky-300 transition-all hover:scale-[1.02]"
               >
                 <Mail className="w-4 h-4" />
-                <span>Enviar correo directo</span>
+                <span>Enviar correo</span>
               </a>
 
               <button
                 onClick={handleCopyEmail}
-                className="inline-flex items-center gap-2.5 px-6 py-4 rounded-xl bg-[#0d1527] hover:bg-[#131d36] text-slate-200 text-sm font-semibold border border-sky-950/70 transition-all hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-black/60 hover:bg-zinc-900 text-zinc-200 text-sm font-medium border border-white/10 transition-all hover:scale-[1.02]"
               >
-                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-sky-400" />}
+                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-zinc-400" />}
                 <span>{copied ? '¡Copiado!' : cvData.personal.email}</span>
               </button>
             </div>
@@ -513,33 +660,33 @@ export default function App() {
 
       </main>
 
-      <footer className="border-t border-sky-950/80 bg-[#02040a] py-16 px-6">
+      <footer className="border-t border-white/10 bg-black py-16 px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mb-14 text-sm">
           <div>
-            <span className="block font-mono text-[11px] text-sky-400/80 uppercase tracking-widest mb-3">
-              DISPONIBILIDAD & SLA
+            <span className="block font-mono text-xs text-zinc-500 uppercase tracking-wider mb-3">
+              Disponibilidad
             </span>
-            <p className="text-slate-300 font-medium leading-relaxed">
+            <p className="text-zinc-300 leading-relaxed">
               Respuesta en menos de 24 horas para procesos de selección o desarrollo de proyectos.
             </p>
           </div>
 
           <div>
-            <span className="block font-mono text-[11px] text-sky-400/80 uppercase tracking-widest mb-3">
-              LOCALIZACIÓN
+            <span className="block font-mono text-xs text-zinc-500 uppercase tracking-wider mb-3">
+              Ubicación
             </span>
-            <p className="text-slate-300 font-medium leading-relaxed">
+            <p className="text-zinc-300 leading-relaxed">
               {cvData.personal.location}
               <br />
-              <span className="text-slate-500">Disponible en modalidad Remota o Híbrida</span>
+              <span className="text-zinc-500">Disponible para modalidad Remota o Híbrida</span>
             </p>
           </div>
 
           <div>
-            <span className="block font-mono text-[11px] text-sky-400/80 uppercase tracking-widest mb-3">
-              CANALES
+            <span className="block font-mono text-xs text-zinc-500 uppercase tracking-wider mb-3">
+              Enlaces Directos
             </span>
-            <div className="flex flex-col gap-2 text-slate-300 font-medium">
+            <div className="flex flex-col gap-2 text-zinc-300">
               <a href={cvData.personal.github} target="_blank" rel="noreferrer" className="hover:text-sky-400 transition-colors">
                 GitHub ↗
               </a>
@@ -553,7 +700,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="max-w-5xl mx-auto pt-8 border-t border-sky-950/50 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-500 gap-4">
+        <div className="max-w-5xl mx-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-zinc-500 gap-4">
           <span>{cvData.personal.name} · SOFTWARE & SOLUTIONS</span>
           <span>DURANGO, MX · © 2026</span>
         </div>
@@ -563,7 +710,7 @@ export default function App() {
         <button
           onClick={scrollToTop}
           aria-label="Volver arriba"
-          className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-[#0a0f1d]/90 border border-sky-900/60 text-white shadow-xl hover:bg-sky-400 hover:text-slate-950 transition-all hover:scale-105"
+          className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-zinc-900 border border-white/20 text-white shadow-xl hover:bg-sky-400 hover:text-slate-950 transition-all hover:scale-105"
         >
           <ArrowUp className="w-4 h-4" />
         </button>
