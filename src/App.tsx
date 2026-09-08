@@ -9,8 +9,7 @@ import {
   MapPin, 
   Sparkles, 
   ArrowUpRight, 
-  Code2, 
-  Layers, 
+  Code2,  
   Cpu, 
   Terminal, 
   Briefcase, 
@@ -49,7 +48,6 @@ const carouselVertical = [
   { src: '/portfolio/d8w.png', label: 'Pieza 8', tag: 'AFTER EFFECTS / MOTION' },
 ];
 
-const pillarIcons = [Code2, Cpu, Terminal, Layers];
 
 export default function App() {
   const [loading, setLoading] = useState(true);
