@@ -19,7 +19,8 @@ import {
   Clock, 
   LayoutGrid, 
   Monitor, 
-  Palette 
+  Palette,
+  FileDown 
 } from 'lucide-react';
 
 const GithubIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
@@ -156,6 +157,17 @@ export default function App() {
                   className="px-6 py-3 rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-950 font-bold text-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Ver Proyectos
+                </a>
+
+                <a
+                  href="/resume.pdf"
+                  download="CV_Levi_Salazar_Jimenez.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-black/60 hover:bg-zinc-900 border border-white/10 text-zinc-200 text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <FileDown className="w-4 h-4 text-sky-400" />
+                  <span>Descargar CV</span>
                 </a>
 
                 <button
@@ -656,6 +668,17 @@ export default function App() {
               >
                 <Mail className="w-4 h-4" />
                 <span>Enviar correo</span>
+              </a>
+
+              <a
+                href="/resume.pdf"
+                download="CV_Levi_Salazar_Jimenez.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-black/60 hover:bg-zinc-900 text-zinc-200 text-sm font-medium border border-white/10 transition-all hover:scale-[1.02]"
+              >
+                <FileDown className="w-4 h-4 text-sky-400" />
+                <span>Descargar CV</span>
               </a>
 
               <button

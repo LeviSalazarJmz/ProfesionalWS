@@ -59,7 +59,9 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-3">
           <a
             href="/resume.pdf"
-            download
+            download="CV_Levi_Salazar_Jimenez.pdf"
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
             <FileDown className="w-4 h-4 text-sky-400" />
@@ -92,7 +94,9 @@ export const Navbar = () => {
           ))}
           <a
             href="/resume.pdf"
-            download
+            download="CV_Levi_Salazar_Jimenez.pdf"
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center justify-center gap-2 w-full py-3 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-500 rounded-xl transition-colors"
           >
             <FileDown className="w-4 h-4" />
