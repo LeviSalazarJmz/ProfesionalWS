@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, startTransition } from 'react';
 import { Navbar } from './components/navbar';
 import { Carousel } from './components/Carousel';
 import { cvData } from './data/cvData';
@@ -74,6 +74,19 @@ export default function App() {
     navigator.clipboard.writeText(cvData.personal.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleTabChange = (tab: 'all' | 'web' | 'design') => {
+    if (projectTab === tab) return;
+    if ('startViewTransition' in document) {
+      document.startViewTransition(() => {
+        setProjectTab(tab);
+      });
+    } else {
+      startTransition(() => {
+        setProjectTab(tab);
+      });
+    }
   };
 
   const webProject = cvData.projects[0];
@@ -274,7 +287,7 @@ export default function App() {
             {/* Pestañas / Filtro Interactivo */}
             <div className="inline-flex p-1.5 rounded-2xl bg-zinc-900 border border-white/10 text-xs font-medium">
               <button
-                onClick={() => setProjectTab('all')}
+                onClick={() => handleTabChange('all')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
                   projectTab === 'all'
                     ? 'bg-sky-400 text-slate-950 font-bold shadow-sm'
@@ -285,7 +298,7 @@ export default function App() {
                 <span>Todos</span>
               </button>
               <button
-                onClick={() => setProjectTab('web')}
+                onClick={() => handleTabChange('web')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
                   projectTab === 'web'
                     ? 'bg-sky-400 text-slate-950 font-bold shadow-sm'
@@ -296,7 +309,7 @@ export default function App() {
                 <span>Software Web</span>
               </button>
               <button
-                onClick={() => setProjectTab('design')}
+                onClick={() => handleTabChange('design')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
                   projectTab === 'design'
                     ? 'bg-sky-400 text-slate-950 font-bold shadow-sm'

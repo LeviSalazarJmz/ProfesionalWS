@@ -15,3 +15,12 @@ html {
   mask-image: radial-gradient(circle at 50% 35%, black 45%, transparent 95%);
   -webkit-mask-image: radial-gradient(circle at 50% 35%, black 45%, transparent 95%);
 }
+
+/* Transiciones de vista (React 19 View Transitions) */
+::view-transition-old(root) {
+  animation-duration: 0.3s;
+}
+
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
