@@ -9,8 +9,6 @@ import {
   MapPin, 
   Sparkles, 
   ArrowUpRight, 
-  Code2,  
-  Cpu, 
   Terminal, 
   Briefcase, 
   GraduationCap, 
@@ -48,7 +46,196 @@ const carouselVertical = [
   { src: '/portfolio/d7w.png', label: 'Pieza 7', tag: 'RETOQUE FOTOGRÁFICO' },
   { src: '/portfolio/d8w.png', label: 'Pieza 8', tag: 'AFTER EFFECTS / MOTION' },
 ];
+const layersData = [
+  {
+    id: 4,
+    code: "CAPA 04",
+    title: "Frontend & UI",
+    level: "Capa de Presentación e Interacción",
+    description: "Diseño y desarrollo de interfaces reactivas con estricto apego al Diseño Centrado en el Usuario (DCU), accesibilidad y tiempos de carga instantáneos.",
+    skills: ["React", "TypeScript", "Tailwind CSS", "Next.js", "HTML5 / CSS3 Semántico", "Diseño Centrado en el Usuario (DCU)"],
+    color: "from-sky-400/20 to-sky-500/5",
+    border: "border-sky-400/60",
+    glow: "shadow-sky-500/20",
+    textColor: "text-sky-400"
+  },
+  {
+    id: 3,
+    code: "CAPA 03",
+    title: "Arquitectura & Backend",
+    level: "Capa de Lógica, Datos e Inteligencia Artificial",
+    description: "Construcción de servicios distribuidos, APIs RESTful, diseño de esquemas de bases de datos relacionales e integración de modelos de Machine y Deep Learning.",
+    skills: ["Python", "Node.js", "Express", "PostgreSQL", "APIs RESTful", "Machine Learning", "Deep Learning"],
+    color: "from-indigo-400/20 to-indigo-500/5",
+    border: "border-indigo-400/60",
+    glow: "shadow-indigo-500/20",
+    textColor: "text-indigo-400"
+  },
+  {
+    id: 2,
+    code: "CAPA 02",
+    title: "Metodologías & Media",
+    level: "Capa de Coordinación Ágil y Producción Creativa",
+    description: "Marcos ágiles de trabajo colaborativo, prototipado interactivo de alta fidelidad y suite creativa para desarrollo de marca y comunicación visual.",
+    skills: ["Scrum", "Kanban", "Figma", "Adobe Photoshop", "Adobe Illustrator", "Premiere Pro", "After Effects"],
+    color: "from-violet-400/20 to-violet-500/5",
+    border: "border-violet-400/60",
+    glow: "shadow-violet-500/20",
+    textColor: "text-violet-400"
+  },
+  {
+    id: 1,
+    code: "CAPA 01",
+    title: "Host Systems",
+    level: "Capa de Infraestructura, Kernel y Despliegue",
+    description: "Entornos operativos de desarrollo multiplataforma, automatización de compilación, control de versiones distribuido y tuberías de integración continua.",
+    skills: ["Linux (Ubuntu Server)", "Windows", "macOS", "Git", "GitHub", "Vercel", "Vite"],
+    color: "from-emerald-400/20 to-emerald-500/5",
+    border: "border-emerald-400/60",
+    glow: "shadow-emerald-500/20",
+    textColor: "text-emerald-400"
+  }
+];
 
+function IsometricStackViewer() {
+  const [selectedLayer, setSelectedLayer] = useState(4);
+  const [exploded, setExploded] = useState(true);
+
+  const activeData = layersData.find((l) => l.id === selectedLayer) || layersData[0];
+
+  const getTransform = (id: number) => {
+    if (!exploded) {
+      if (id === 4) return "translateZ(45px)";
+      if (id === 3) return "translateZ(30px)";
+      if (id === 2) return "translateZ(15px)";
+      return "translateZ(0px)";
+    }
+    if (id === 4) return "translateZ(135px)";
+    if (id === 3) return "translateZ(80px)";
+    if (id === 2) return "translateZ(25px)";
+    return "translateZ(-30px)";
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#050811] border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl overflow-hidden relative">
+      
+      {/* COLUMNA IZQUIERDA: ESCENARIO 3D ISOMÉTRICO */}
+      <div className="lg:col-span-6 flex flex-col items-center justify-center relative min-h-[400px] sm:min-h-[460px]">
+        
+        {/* Rótulo Perfil ISC */}
+        <div className="absolute top-2 left-2 z-20 flex items-center gap-2 font-mono text-xs text-zinc-400">
+          <span className="px-3 py-1 rounded-xl bg-black/70 border border-white/15 text-white font-bold tracking-wide">
+            Perfil ISC
+          </span>
+          <span className="text-[11px] text-zinc-500 hidden sm:inline">
+            TOCA UNA PLACA PARA AUDITAR
+          </span>
+        </div>
+
+        {/* Botón Ensamblar / Explosionar */}
+        <div className="absolute top-2 right-2 z-20">
+          <button
+            onClick={() => setExploded(!exploded)}
+            className="px-3.5 py-1.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-white/10 text-xs font-mono text-zinc-200 transition-all hover:scale-105 active:scale-95"
+          >
+            {exploded ? "Ensamblar Stack" : "Explosionar Stack"}
+          </button>
+        </div>
+
+        {/* Contenedor 3D */}
+        <div className="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center [perspective:1000px] mt-6">
+          <div
+            className="relative w-48 h-48 sm:w-56 sm:h-56 transition-transform duration-700 ease-out"
+            style={{
+              transformStyle: "preserve-3d",
+              transform: "rotateX(60deg) rotateZ(-40deg)",
+            }}
+          >
+            {layersData.map((layer) => {
+              const isSelected = selectedLayer === layer.id;
+              return (
+                <div
+                  key={layer.id}
+                  onClick={() => setSelectedLayer(layer.id)}
+                  style={{
+                    transform: getTransform(layer.id),
+                    transformStyle: "preserve-3d",
+                  }}
+                  className={`absolute inset-0 rounded-2xl border-2 transition-all duration-500 cursor-pointer backdrop-blur-md flex flex-col justify-end p-4 pb-3 select-none ${
+                    isSelected
+                      ? `${layer.border} bg-gradient-to-br ${layer.color} shadow-2xl ${layer.glow} scale-105 ring-2 ring-white/20`
+                      : "border-white/10 bg-[#090e1a]/85 hover:border-white/30 opacity-80 hover:opacity-100"
+                  }`}
+                >
+                  {/* Nombre al pie del rectángulo */}
+                  <div className="pointer-events-none text-center">
+                    <span className="font-bold text-sm sm:text-base text-white tracking-wide block drop-shadow-md">
+                      {layer.title}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Estado al pie */}
+        <div className="text-center font-mono text-[11px] text-zinc-500 mt-4">
+          ESTADO: {exploded ? "VISTA EXPLOSIONADA (DESPIECE DE CAPAS)" : "STACK ENSAMBLADO (PERFIL ISC)"}
+        </div>
+      </div>
+
+      {/* COLUMNA DERECHA: PANEL INSPECTOR */}
+      <div className="lg:col-span-6 p-6 sm:p-8 rounded-2xl bg-[#090e1a]/95 border border-white/10 flex flex-col justify-between min-h-[380px] shadow-inner">
+        <div>
+          <div className="flex items-center justify-between gap-3 mb-4 pb-4 border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <span className={`font-mono text-xs font-bold px-2.5 py-1 rounded bg-black/60 border border-white/10 ${activeData.textColor}`}>
+                {activeData.code}
+              </span>
+              <span className="text-xs font-mono text-zinc-400 uppercase">
+                {activeData.level}
+              </span>
+            </div>
+            <span className="text-xs font-mono text-zinc-500">
+              0{activeData.id} / 04
+            </span>
+          </div>
+
+          <h3 className="text-2xl font-bold text-white mb-3">
+            {activeData.title}
+          </h3>
+
+          <p className="text-zinc-300 text-sm leading-relaxed mb-6">
+            {activeData.description}
+          </p>
+
+          <div className="mb-6">
+            <span className="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-3">
+              Tecnologías y Estándares Asociados:
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {activeData.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="text-xs px-3 py-1.5 rounded-lg bg-black/60 text-zinc-200 border border-white/10 font-mono"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-zinc-500">
+          <span>PERFIL PROFESIONAL: ISC ITD</span>
+          <span className="text-emerald-400">DISCIPLINA SELECCIONADA</span>
+        </div>
+      </div>
+
+    </div>
+  );
+}
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -435,169 +622,25 @@ export default function App() {
         </section>
 
         {/* ========================================================================= */}
-        {/* STACK TÉCNICO MODULAR                                                     */}
-        {/* ========================================================================= */}
-        {/* ========================================================================= */}
-        {/* MAPA CONCEPTUAL CARDINAL: STACK TECNOLÓGICO                               */}
+        {/* VISTA EXPLOSIONADA ISOMÉTRICA (ISC STACK ARCHITECTURE)                    */}
         {/* ========================================================================= */}
         <section id="habilidades" className="scroll-mt-32">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 text-sky-400 text-xs font-mono uppercase tracking-wider mb-2">
-              <Sparkles className="w-4 h-4" />
-              <span>ARQUITECTURA DE COMPETENCIAS</span>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 text-sky-400 text-xs font-mono uppercase tracking-wider mb-2">
+                <Terminal className="w-4 h-4" />
+                <span>ARQUITECTURA DE SISTEMAS // EXPLODED VIEW</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-2">
+                Ecosistema ISC en Capas
+              </h2>
+              <p className="text-zinc-400 text-sm max-w-xl leading-relaxed">
+                Desglose isométrico: cada estrato representa una disciplina técnica que conforma mi perfil en Ingeniería en Sistemas Computacionales.
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
-              Mapa Técnico de Disciplinas
-            </h2>
-            <p className="text-zinc-400 text-sm leading-relaxed">
-              Esquema de integración entre desarrollo de interfaz, lógica de datos, diseño humano e infraestructura operativa.
-            </p>
           </div>
 
-          <div className="relative max-w-4xl mx-auto flex flex-col items-center">
-
-            {/* ------------------------------------------------------------- */}
-            {/* BLOQUE NORTE: CAPA DE PRESENTACIÓN / FRONTEND                 */}
-            {/* ------------------------------------------------------------- */}
-            <div className="w-full max-w-md z-10">
-              <div className="p-6 rounded-3xl bg-zinc-950/90 border border-sky-500/30 shadow-xl shadow-sky-500/5 hover:border-sky-400 transition-all duration-300">
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
-                      <Code2 className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-base font-bold text-white">Frontend & UI</h3>
-                  </div>
-                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 font-semibold">
-                    PRESENTACIÓN
-                  </span>
-                </div>
-                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
-                  Interfaces reactivas, componentes desacoplados y maquetación centrada en la experiencia de uso.
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {["React", "TypeScript", "Tailwind CSS", "Next.js", "HTML5/CSS3", "DCU"].map((skill) => (
-                    <span key={skill} className="text-xs px-2.5 py-1 rounded-lg bg-zinc-900 text-zinc-300 border border-white/5 font-mono">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* LÍNEA CONECTORA NORTE -> CENTRO */}
-            <div className="h-10 w-px bg-gradient-to-b from-sky-400 via-sky-500/50 to-sky-400/20 relative">
-              <div className="absolute top-1/2 -translate-y-1/2 -left-1 w-2.5 h-2.5 rounded-full bg-sky-400/80 blur-xs" />
-            </div>
-
-            {/* ------------------------------------------------------------- */}
-            {/* FILA CENTRAL: OESTE (BACKEND) | NÚCLEO ISC | ESTE (CREATIVIDAD)*/}
-            {/* ------------------------------------------------------------- */}
-            <div className="w-full grid grid-cols-1 lg:grid-cols-11 gap-4 items-center z-10">
-
-              {/* BLOQUE OESTE: BACKEND & IA (4 columnas) */}
-              <div className="lg:col-span-4 p-6 rounded-3xl bg-zinc-950/90 border border-white/10 hover:border-sky-500/30 transition-all duration-300 shadow-xl">
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                      <Cpu className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-base font-bold text-white">Backend & IA</h3>
-                  </div>
-                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-white/10 font-semibold">
-                    CÓMPUTO
-                  </span>
-                </div>
-                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
-                  Construcción de APIs, persistencia relacional e integración de modelos para transformación digital.
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {["Python", "Node.js", "Express", "PostgreSQL", "APIs REST", "Machine Learning"].map((skill) => (
-                    <span key={skill} className="text-xs px-2.5 py-1 rounded-lg bg-zinc-900 text-zinc-300 border border-white/5 font-mono">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* LÍNEA HORIZONTAL OESTE -> NÚCLEO (Solo desktop) */}
-              <div className="hidden lg:block lg:col-span-1 h-px bg-gradient-to-r from-white/10 via-sky-400/40 to-sky-400" />
-
-              {/* NODO NÚCLEO CENTRAL (1 columna) */}
-              <div className="lg:col-span-1 flex flex-col items-center justify-center my-2 lg:my-0">
-                <div className="relative group p-3.5 rounded-2xl bg-black border border-sky-400/60 shadow-lg shadow-sky-500/20 flex flex-col items-center justify-center">
-                  <div className="absolute -inset-1 rounded-2xl bg-sky-400/20 blur-md animate-pulse" />
-                  <span className="relative text-[30px] font-mono text-sky-400 font-bold tracking-widest text-center leading-tight">
-                    ISC<br />
-                  </span>
-                </div>
-              </div>
-
-              {/* LÍNEA HORIZONTAL NÚCLEO -> ESTE (Solo desktop) */}
-              <div className="hidden lg:block lg:col-span-1 h-px bg-gradient-to-r from-sky-400 via-sky-400/40 to-white/10" />
-
-              {/* BLOQUE ESTE: DISEÑO & METODOLOGÍAS (4 columnas) */}
-              <div className="lg:col-span-4 p-6 rounded-3xl bg-zinc-950/90 border border-white/10 hover:border-sky-500/30 transition-all duration-300 shadow-xl">
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-violet-500/10 text-violet-400 border border-violet-500/20">
-                      <Palette className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-base font-bold text-white">Diseño & Ágil</h3>
-                  </div>
-                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-white/10 font-semibold">
-                    EXPERIENCIA
-                  </span>
-                </div>
-                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
-                  Metodologías de colaboración rápida y suite creativa aplicada a activos visuales e interacción.
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {["Scrum / Kanban", "Figma", "Photoshop", "Illustrator", "After Effects"].map((skill) => (
-                    <span key={skill} className="text-xs px-2.5 py-1 rounded-lg bg-zinc-900 text-zinc-300 border border-white/5 font-mono">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-
-            {/* LÍNEA CONECTORA CENTRO -> SUR */}
-            <div className="h-10 w-px bg-gradient-to-b from-sky-400/20 via-sky-500/50 to-sky-400 relative">
-              <div className="absolute top-1/2 -translate-y-1/2 -left-1 w-2.5 h-2.5 rounded-full bg-sky-400/80 blur-xs" />
-            </div>
-
-            {/* ------------------------------------------------------------- */}
-            {/* BLOQUE SUR: INFRAESTRUCTURA & SISTEMAS OPERATIVOS             */}
-            {/* ------------------------------------------------------------- */}
-            <div className="w-full max-w-md z-10">
-              <div className="p-6 rounded-3xl bg-zinc-950/90 border border-white/10 hover:border-sky-500/30 transition-all duration-300 shadow-xl">
-                <div className="flex items-center justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      <Terminal className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-base font-bold text-white">Sistemas & OS</h3>
-                  </div>
-                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-white/10 font-semibold">
-                    CIMIENTOS
-                  </span>
-                </div>
-                <p className="text-zinc-400 text-xs leading-relaxed mb-4">
-                  Manejo de entornos de desarrollo multiplataforma, control de versiones y flujo de despliegue continuo.
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {["Linux / Ubuntu", "Windows", "macOS", "Git / GitHub", "Vercel", "Vite"].map((skill) => (
-                    <span key={skill} className="text-xs px-2.5 py-1 rounded-lg bg-zinc-900 text-zinc-300 border border-white/5 font-mono">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-          </div>
+          <IsometricStackViewer />
         </section>
 
         {/* ========================================================================= */}
